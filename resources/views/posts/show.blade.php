@@ -23,6 +23,13 @@
                 <p class='body'>{{ $post->body }}</p>
                 <span class='created_at'>{{ $post->created_at }}</span>  
             </div>
+            <div>
+                <h3>コメント一覧</h3>
+                @foreach ($post->comments as $comment)
+                    <p>ユーザ名: {{ $comment->user->name }}</p>
+                    <p>{{ $comment->body }}</p>
+                @endforeach
+            </div>
         </div>
         <div class="footer">
             <a href="/">戻る</a>

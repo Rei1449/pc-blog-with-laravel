@@ -15,38 +15,44 @@
             </div>
             <div class="body">
                 <h2>Body</h2>
-                <textarea name="post[body]" placeholder="今日も1日お疲れさまでした。"></textarea>
+                <textarea name="post[body]" placeholder="・どの講義でも必ずパソコンを使うため、バッテリーの持ちが悪くて大変"></textarea>
             </div>
             <div class="image">
                 <h2>写真を入れる予定地</h2>
             </div>
             <div class="os">
                 <h2>osを選択してください</h2>
-                <input type="radio" name="post[os]" value="os1" id="os1">
-                <label for="option1">オプション1</label>
-                <input type="radio" name="post[os]" value="os2" id="os2" >
-                <label for="option2">オプション2</label>
+                <input type="radio" name="post[os]" value="Mac" id="mac">
+                <label for="option1">Mac</label>
+                <input type="radio" name="post[os]" value="Windows" id="Windows" >
+                <label for="option2">Windows</label>
             </div>
             <div class="cost">
-                <h2>costを選択してください</h2>
-                <input type="radio" name="post[cost]" value="cost1" id="cost1">
-                <label for="option1">オプション1</label>
-                <input type="radio" name="post[cost]" value="cost2" id="cost2" >
-                <label for="option2">オプション2</label>
+                <h2>値段を選択してください</h2>
+                <input type="radio" name="post[cost]" value="8万円以下" id="cost1">
+                <label for="option1">8万円以下</label>
+                <input type="radio" name="post[cost]" value="8万円~12万円" id="cost2" >
+                <label for="option2">8~12万円</label>
+                <input type="radio" name="post[cost]" value="12万円以上" id="cost3" >
+                <label for="option3">12万円以上</label>
             </div>
             <div class="weight">
-                <h2>weightを選択してください</h2>
-                <input type="radio" name="post[weight]" value="weight1" id="weight1">
-                <label for="option1">オプション1</label>
-                <input type="radio" name="post[weight]" value="weight2" id="weight2" >
-                <label for="option2">オプション2</label>
+                <h2>重さを選択してください</h2>
+                <input type="radio" name="post[weight]" value="1.5kg以下" id="weight1">
+                <label for="option1">1.5kg以下</label>
+                <input type="radio" name="post[weight]" value="1.5~2kg" id="weight2" >
+                <label for="option2">1.5~2kg</label>
+                <input type="radio" name="post[weight]" value="2kg以上" id="weight3" >
+                <label for="option3">2kg以上</label>
             </div>
             <div class="battery">
-                <h2>batteryを選択してください</h2>
-                <input type="radio" name="post[battery]" value="battery1" id="battery1">
-                <label for="option1">オプション1</label>
-                <input type="radio" name="post[battery]" value="battery2" id="battery2" >
-                <label for="option2">オプション2</label>
+                <h2>バッテリーの持続時間を選択してください（充電をしないで使える時間をお答えください）</h2>
+                <input type="radio" name="post[battery]" value="3時間以下" id="battery1">
+                <label for="option1">3時間以下</label>
+                <input type="radio" name="post[battery]" value="3時間~6時間" id="battery2" >
+                <label for="option2">3時間~6時間</label>
+                <input type="radio" name="post[battery]" value="6時間以上" id="battery3" >
+                <label for="option3">6時間以上</label>
             </div>
             
             <input type="hidden" name="post[user_id]" value="{{ $user->id }}">

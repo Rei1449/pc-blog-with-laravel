@@ -23,8 +23,9 @@ Route::get('/', function () {
 Route::get('/home', [PostController::class, 'home'])->name('home');
 Route::get('/posts/create', [PostController::class, 'create']);
 Route::post('/posts', [PostController::class, 'store']);
-Route::get('posts/comment',[CommentController::class, 'comment']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::get('posts/{post}/comment',[CommentController::class, 'comment']);
+Route::post('/comments', [CommentController::class, 'store']);
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 
 Route::get('/dashboard', function () {

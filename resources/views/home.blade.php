@@ -36,7 +36,7 @@
                     <p class='weight'>{{ $post->weight }}</p>
                     <p class='battery'>{{ $post->battery }}</p>
                     <p class='body'>{{ $post->body }}</p>
-                    <a href='/posts/comment'>コメント</a>
+                    <a href='/posts/{{ $post->id }}/comment'>コメント</a>
                     <br>
                     <span class='created_at'>{{ $post->created_at }}</span>
                 </div>

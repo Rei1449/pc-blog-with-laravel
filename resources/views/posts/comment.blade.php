@@ -20,15 +20,15 @@
             <p class='body'>{{ $post->body }}</p>
             <span class='created_at'>{{ $post->created_at }}</span>
         </div>
-        <form action="/posts" method="POST">
+        <form action="/comments" method="POST">
             @csrf
             <div class="body">
                 <h2>Body</h2>
                 <textarea name="comment[body]" placeholder="質問内容を入力してください。"></textarea>
             </div>
             
-            <input type="hidden" name="post[user_id]" value="{{ $user->id }}">
-            <input type="hidden" name="post[post_id]" value="{{ $post->id }}">
+            <input type="hidden" name="comment[user_id]" value="{{ $user->id }}">
+            <input type="hidden" name="comment[post_id]" value="{{ $post->id }}">
             
             <input type="submit" value="store"/>
         </form>
