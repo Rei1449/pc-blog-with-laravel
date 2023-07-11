@@ -12,13 +12,13 @@ class CommentController extends Controller
     public function comment(Post $post)
     {
         $user = Auth::user();
-        return view('posts.comment',compact('user'))->with(['post' => $post]);
+        return view('posts.comment',compact('user','post'));
     }
     
     public function store(Request $request, Comment $comment)
     {
         $input = $request['comment'];
         $comment->fill($input)->save();
-        return redirect('/posts.comment' . $comment->id);
+        return redirect()->route('posts.show', ['post' => $comment->post_id]);
     }
 }
