@@ -8,42 +8,35 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
-        <h1>Blog Name</h1>
-        @if (Route::has('login'))
-            <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
-
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-        <a href='/posts/create'>create</a>
-        <div class='posts'>
-            @foreach ($posts as $post)
-                <div class='p-4 m-4 border bg-gray-100 '>
-                    <h2 class='title'>
-                        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
-                    </h2>
-                    <p class='user_name'>{{ $post->user->name }}</p>
-                    <p class='user_name'>{{ $post->user->university_name }}</p>
-                    <p class='os'>{{ $post->os }}</p>
-                    <p class='cost'>{{ $post->cost }}</p>
-                    <p class='weight'>{{ $post->weight }}</p>
-                    <p class='battery'>{{ $post->battery }}</p>
-                    <p class='body'>{{ $post->body }}</p>
-                    <a href='/posts/{{ $post->id }}/comment'>コメント</a>
-                    <br>
-                    <span class='created_at'>{{ $post->created_at }}</span>
+        <x-app-layout>
+            <x-slot name="header">
+                <a href='/posts/create'>記事作成</a>
+                <x-text-input id="search" name="search" type="text" class="mt-1 block w-full" placeholder="パソコン名を入力してください"/>
+            </x-slot>
+            <div class="py-12">
+                <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
+                    @foreach ($posts as $post)
+                        <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg'>
+                            <h2 class='title'>
+                                <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+                            </h2>
+                            <p class='user_name'>{{ $post->user->name }}</p>
+                            <p class='user_name'>{{ $post->user->university_name }}</p>
+                            <p class='os'>{{ $post->os }}</p>
+                            <p class='cost'>{{ $post->cost }}</p>
+                            <p class='weight'>{{ $post->weight }}</p>
+                            <p class='battery'>{{ $post->battery }}</p>
+                            <p class='body'>{{ $post->body }}</p>
+                            <a href='/posts/{{ $post->id }}/comment'>コメント</a>
+                            <br>
+                            <span class='created_at'>{{ $post->created_at }}</span>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
-        <div class='paginate'>
-            {{ $posts->links() }}
-        </div>
+            </div>
+            <div class='paginate'>
+                {{ $posts->links() }}
+            </div>
+        </x-app-layout>
     </body>
 </html>
