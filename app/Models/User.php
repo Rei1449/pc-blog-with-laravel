@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Post::class, 'bookmarks', 'user_id', 'post_id')->withTimestamps();
     }
     
+    public function is_like($postId)
+    {
+        return $this->likes()->where('post_id', $postId)->exists();
+    }
+    
     public function is_bookmark($postId)
     {
         return $this->bookmarks()->where('post_id', $postId)->exists();
