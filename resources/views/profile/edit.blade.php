@@ -1,8 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('プロフィール') }}
-        </h2>
+        <div class="flex">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-2">
+                {{ __('プロフィール') }}
+            </h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <a href="{{ route('bookmarks') }}">{{ __('ブックマーク') }}</a>
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">

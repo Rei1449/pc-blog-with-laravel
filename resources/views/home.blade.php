@@ -5,6 +5,7 @@
         <title>Blog</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
@@ -27,6 +28,20 @@
                             <p class='weight'>{{ $post->weight }}</p>
                             <p class='battery'>{{ $post->battery }}</p>
                             <p class='body'>{{ $post->body }}</p>
+                            <div class="article-control">
+                                @if (!Auth::user()->is_bookmark($post->id))
+                                <form action="{{ route('bookmark.store', $post) }}" method="post">
+                                    @csrf
+                                    <button><i class="fa-regular fa-bookmark"></i>お気に入り登録</button>
+                                </form>
+                                @else
+                                <form action="{{ route('bookmark.destroy', $post) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                    <button><i class="fa-solid fa-bookmark"></i>お気に入り解除</button>
+                                </form>
+                                @endif
+                            </div>
                             <a href='/posts/{{ $post->id }}/comment'>コメント</a>
                             <br>
                             <span class='created_at'>{{ $post->created_at }}</span>

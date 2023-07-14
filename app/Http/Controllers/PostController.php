@@ -32,4 +32,13 @@ class PostController extends Controller
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id);
     }
+    
+    public function bookmark_posts()
+    {
+        $posts = \Auth::user()->bookmarks()->orderBy('created_at', 'desc')->paginate(10);
+        $data = [
+            'posts' => $posts,
+        ];
+        return view('posts.bookmarks', $data);
+    }
 }

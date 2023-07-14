@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\BookmarkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,10 @@ Route::post('/posts', [PostController::class, 'store']);
 Route::get('posts/{post}/comment',[CommentController::class, 'comment']);
 Route::post('/comments', [CommentController::class, 'store']);
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::post('/articles/{article}/bookmark', [BookmarkController::class, 'store'])->name('bookmark.store');
+Route::delete('/articles/{article}/unbookmark', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
+Route::get('/bookmarks', [PostController::class, 'bookmark_posts'])->name('bookmarks');
 
 
 Route::get('/dashboard', function () {
