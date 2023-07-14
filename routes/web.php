@@ -30,7 +30,7 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 
 Route::post('/articles/{article}/bookmark', [BookmarkController::class, 'store'])->name('bookmark.store');
 Route::delete('/articles/{article}/unbookmark', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
-Route::get('/bookmarks', [PostController::class, 'bookmark_articles'])->name('bookmarks');
+Route::get('/bookmarks', [PostController::class, 'bookmark_posts'])->name('bookmarks');
 
 
 Route::get('/dashboard', function () {

@@ -35,9 +35,9 @@ class PostController extends Controller
     
     public function bookmark_posts()
     {
-        $articles = \Auth::user()->bookmarks()->orderBy('created_at', 'desc')->paginate(10);
+        $posts = \Auth::user()->bookmarks()->orderBy('created_at', 'desc')->paginate(10);
         $data = [
-            'articles' => $articles,
+            'posts' => $posts,
         ];
         return view('posts.bookmarks', $data);
     }
