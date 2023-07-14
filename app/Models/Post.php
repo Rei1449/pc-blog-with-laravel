@@ -34,6 +34,11 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id')->withTimestamps();
     }
     
+    public function likeCount()
+    {
+        return $this->likedBy()->count();
+    }
+    
     public function bookmarkedBy()
     {
         return $this->belongsToMany(User::class, 'bookmarks', 'post_id', 'user_id')->withTimestamps();
