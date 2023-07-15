@@ -39,7 +39,7 @@ class PostController extends Controller
         $data = [
             'posts' => $posts,
         ];
-        return view('posts.like', $data);
+        return view('posts.likes', $data);
     }
 
     public function bookmark_posts()
