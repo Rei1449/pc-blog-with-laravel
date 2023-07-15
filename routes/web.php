@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,8 @@ Route::get('/bookmarks', [PostController::class, 'bookmark_posts'])->name('bookm
 Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like.store');
 Route::delete('/posts/{post}/unlike', [LikeController::class, 'destroy'])->name('like.destroy');
 Route::get('/likes', [PostController::class, 'like_posts'])->name('likes');
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
 
 Route::get('/ranking', [PostController::class, 'ranking'])->name('ranking');
 
