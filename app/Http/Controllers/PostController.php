@@ -50,4 +50,11 @@ class PostController extends Controller
         ];
         return view('posts.bookmarks', $data);
     }
+    
+    public function ranking()
+    {
+        $posts = Post::has('likedBy', '>=', 1)->paginate(10);
+
+        return view('posts.ranking', compact('posts'));
+    }
 }

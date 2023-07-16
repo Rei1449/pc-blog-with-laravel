@@ -20,32 +20,34 @@
                     <p class='weight'>{{ $post->weight }}</p>
                     <p class='battery'>{{ $post->battery }}</p>
                     <p class='body'>{{ $post->body }}</p>
-                    <div class="post-control">
-                        @if (!Auth::user()->is_bookmark($post->id))
-                        <form action="{{ route('bookmark.store', $post) }}" method="post">
-                            @csrf
-                            <button><i class="fa-regular fa-bookmark"></i>お気に入り登録</button>
-                        </form>
-                        @else
-                        <form action="{{ route('bookmark.destroy', $post) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button><i class="fa-solid fa-bookmark"></i>お気に入り解除</button>
-                        </form>
-                        @endif
-                        @if (!Auth::user()->is_like($post->id))
-                        <form action="{{ route('like.store', $post) }}" method="post">
-                            @csrf
-                            <button><i class="fa-regular fa-heart"></i>いいね登録</button>
-                        </form>
-                        @else
-                        <form action="{{ route('like.destroy', $post) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button><i class="fa-solid fa-heart"></i>いいね解除</button>
-                        </form>
-                        @endif
-                    </div>
+                    @auth
+                        <div class="post-control">
+                            @if (!Auth::user()->is_bookmark($post->id))
+                            <form action="{{ route('bookmark.store', $post) }}" method="post">
+                                @csrf
+                                <button><i class="fa-regular fa-bookmark"></i>お気に入り登録</button>
+                            </form>
+                            @else
+                            <form action="{{ route('bookmark.destroy', $post) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button><i class="fa-solid fa-bookmark"></i>お気に入り解除</button>
+                            </form>
+                            @endif
+                            @if (!Auth::user()->is_like($post->id))
+                            <form action="{{ route('like.store', $post) }}" method="post">
+                                @csrf
+                                <button><i class="fa-regular fa-heart"></i>いいね登録</button>
+                            </form>
+                            @else
+                            <form action="{{ route('like.destroy', $post) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button><i class="fa-solid fa-heart"></i>いいね解除</button>
+                            </form>
+                            @endif
+                        </div>
+                    @endauth
                     <p>いいね数: {{ $post->likeCount() }}</p>
                     <a href='/posts/{{ $post->id }}/comment'>コメント</a>
                     <br>
