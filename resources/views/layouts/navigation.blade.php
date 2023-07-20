@@ -70,10 +70,7 @@
                     </x-dropdown>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザ登録</a>
-                @endif
+                <a href="{{ route('login') }}" align="right" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">ログイン</a>
             @endauth
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
