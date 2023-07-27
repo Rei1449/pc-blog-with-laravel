@@ -1,10 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href='/posts/create'>記事作成</a>
-        <form action="{{ route('search') }}" method="GET">
-            <x-text-input id="search" name="keyword" type="text" class="mt-1 block w-full" placeholder="大学名または記事のタイトルを入力してください" />
-            <button type="submit">検索</button>
-        </form>
+        <div class="flex justify-center">
+            <form action="{{ route('search') }}" method="GET" class="flex">
+                <x-text-input id="search" name="keyword" type="text" class="mt-1 block w-full flex-shrink-0" placeholder="大学名または記事のタイトルを入力してください" />
+                <button type="submit" class="ml-2 px-4 py-2 bg-black text-white rounded">検索</button>
+            </form>
+        </div>
     </x-slot>
     <div class="py-12">
         <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
@@ -58,7 +59,9 @@
                         <p class='os'>{{ $post->os }}</p>
                         <span class='created_at ml-auto'>投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
                     </div>
-                    <a href='/posts/{{ $post->id }}/comment'>コメント</a>
+                    <div class="flex justify-center">
+                        <a class="p-4 bg-white rounded" href="/posts/{{ $post->id }}">記事の詳細を見る</a>
+                    </div>
                 </div>
             @endforeach
         </div>
