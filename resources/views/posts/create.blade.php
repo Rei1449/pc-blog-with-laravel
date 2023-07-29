@@ -1,12 +1,4 @@
-<!DOCTYPE HTML>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>Blog</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body>
-        <h1>Blog Name</h1>
+<x-app-layout>
         <form action="/posts" method="POST">
             @csrf
             <div class="title">
@@ -60,7 +52,6 @@
             <input type="submit" value="store"/>
         </form>
         <div class="footer">
-            <a href="/">戻る</a>
+            <a class="ml-2 px-4 py-2 bg-gray-200 rounded" href="/">戻る</a>
         </div>
-    </body>
-</html>
+</x-app-layout>

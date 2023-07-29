@@ -24,16 +24,23 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [PostController::class, 'home'])->name('home');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/ranking', [PostController::class, 'ranking'])->name('ranking');
+Route::get('/usage', function () { return view('usage'); })->name('usage');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/posts/create', [PostController::class, 'create']);
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store']);
-    Route::get('posts/{post}/comment',[CommentController::class, 'comment']);
+    //Route::get('posts/{post}/comment',[CommentController::class, 'comment']);
     Route::post('/comments', [CommentController::class, 'store']);
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+    Route::put('/posts/{post}', [PostController::class, 'update']);
+    Route::delete('/posts/{post}', [PostController::class,'delete']);
+});
+
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
     
+Route::middleware('auth')->group(function () {
     Route::post('/posts/{post}/bookmark', [BookmarkController::class, 'store'])->name('bookmark.store');
     Route::delete('/posts/{post}/unbookmark', [BookmarkController::class, 'destroy'])->name('bookmark.destroy');
     Route::get('/bookmarks', [PostController::class, 'bookmark_posts'])->name('bookmarks');
@@ -49,6 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::get('/submitted', [PostController::class, 'submitted_posts'])->name('submitted');
 });
 
 require __DIR__.'/auth.php';

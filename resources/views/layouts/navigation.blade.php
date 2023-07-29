@@ -3,22 +3,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('usage')" :active="request()->routeIs('usage')">
+                        {{ __('使い方') }}
                     </x-nav-link>
                 </div>
                 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home') || request()->routeIs('search')">
                         {{ __('ホーム') }}
                     </x-nav-link>
                 </div>
@@ -30,10 +23,17 @@
                 </div>
                 @auth
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                        <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit') || request()->routeIs('submitted') || request()->routeIs('bookmarks')">
                             {{ __('マイページ') }}
                         </x-nav-link>
                     </div>
+                    @if( Auth::user()->grade === 'university')
+                        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
+                                {{ __('記事作成') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endauth
                 
                 
@@ -70,10 +70,7 @@
                     </x-dropdown>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">ログイン</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">ユーザ登録</a>
-                @endif
+                <a href="{{ route('login') }}" align="right" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">ログイン</a>
             @endauth
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
@@ -94,9 +91,19 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('ホーム') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('ranking')" :active="request()->routeIs('ranking')">
+                {{ __('ランキング') }}
+            </x-responsive-nav-link>
+        </div>
         @auth
             <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit') || request()->routeIs('submitted') || request()->routeIs('bookmarks')">
                     {{ __('マイページ') }}
                 </x-responsive-nav-link>
             </div>
