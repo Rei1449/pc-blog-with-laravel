@@ -10,7 +10,15 @@
     <div class="py-12">
         <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
             @foreach ($posts as $post)
-                <div class='p-4 sm:p-8 {{  $post->user->humanities_or_science === 'science' ? 'bg-blue-100' : 'bg-red-100' }}  shadow sm:rounded-lg'>
+                <div class='p-4 sm:p-8 
+                    @if ($post->user->humanities_or_science === 'science')
+                        bg-blue-100
+                    @elseif ($post->user->humanities_or_science === 'humanities')
+                        bg-red-100
+                    @elseif ($post->user->humanities_or_science === 'speciality')
+                        bg-green-100
+                    @endif 
+                    shadow sm:rounded-lg'>
                     <h2 class='text-4xl border-b-4 border-gray-100 flex'>
                         <a class="font-bold" href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
                         @auth

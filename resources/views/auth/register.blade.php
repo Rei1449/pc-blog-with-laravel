@@ -25,7 +25,7 @@
         <!-- Password -->
         <div class="mt-4">
             <div class="flex">
-                <x-input-label for="password" :value="__('パスワード')" />
+                <x-input-label for="password" :value="__('パスワード(8文字以上)')" />
                 <span class="text-red-600">*</span>
             </div>
 
@@ -69,7 +69,10 @@
             </div>
             <x-input-error :messages="$errors->get('grade')" class="mt-2" />
         </div>
-
+        
+        <div class="mt-4 text-red-500">
+            以下は大学を選択した方のみ
+        </div>
         <!-- University Name -->
         <div class="mt-4">
             <div class="flex">
@@ -95,12 +98,16 @@
                     <input type="radio" class="form-radio" name="humanities_or_science" value="science" {{ old('humanities_or_science') === 'science' ? 'checked' : '' }}>
                     <span class="ml-2">{{ __('理系') }}</span>
                 </label>
+                <label class="inline-flex items-center ml-4">
+                    <input type="radio" class="form-radio" name="humanities_or_science" value="speciality" {{ old('humanities_or_science') === 'speciality' ? 'checked' : '' }}>
+                    <span class="ml-2">{{ __('専門') }}</span>
+                </label>
             </div>
             <x-input-error :messages="$errors->get('humanities_or_science')" class="mt-2" />
         </div>
 
         <!-- Faculty -->
-        <div class="mt-4" x-show="selectedGrade === 'university'">
+        <div class="mt-4">
             <x-input-label for="faculty" :value="__('学部')" />
             <x-text-input id="faculty" class="block mt-1 w-full" type="text" name="faculty" :value="old('faculty')" />
             <x-input-error :messages="$errors->get('faculty')" class="mt-2" />

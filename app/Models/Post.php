@@ -17,6 +17,7 @@ class Post extends Model
         'weight',
         'battery',
         'user_id',
+        'purchase_path',
     ];
     
     public function user()

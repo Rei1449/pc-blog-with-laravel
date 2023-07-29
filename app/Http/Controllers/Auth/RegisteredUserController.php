@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'grade' => ['required', 'string', 'max:255'],
             'university_name' => ['nullable', 'string', 'max:255'],
-            'humanities_or_science' => ['required', 'string', 'max:255'],
+            'humanities_or_science' => ['nullable', 'string', 'max:255'],
             'faculty' => ['nullable', 'string', 'max:255'],
         ]);
     
