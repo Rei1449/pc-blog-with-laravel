@@ -16,8 +16,15 @@
                         <h2>Body</h2>
                         <textarea name="post[body]" class="w-full" placeholder="・どの講義でも必ずパソコンを使うため、バッテリーの持ちが悪くて大変">{{ $post->body }}</textarea>
                     </div>
-                    <div class="image">
-                        <h2>写真を入れる予定地</h2>
+                    <div>
+                        @if ($post->image_path)
+                            <div>編集前の画像</div>
+                            <img src="{{ $post->image_path }}" alt="記事の画像">
+                            <input type="checkbox" name="image_delete">編集前の画像を削除しますか？
+                            <div class="text-red-400">*新しい画像を入れる場合、チェックをしていなくても編集前の画像は削除されます</div>
+                        @endif
+                        <input type="file" name="image" id="imageInput">
+                        <img id="imagePreview" src="#" alt="プレビュー画像" style="display:none; max-width: 200px; max-height: 200px;">
                     </div>
                     <div class='flex-none sm:flex'>
                         <div class='p-4 mb-2 bg-gray-50 shadow sm:rounded-lg'>
@@ -67,4 +74,24 @@
     <div class="footer">
         <a class="ml-2 px-4 py-2 bg-gray-200 rounded" href="/">戻る</a>
     </div>
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function () {
+            const fileInput = this;
+            const imgPreview = document.getElementById('imagePreview');
+    
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = 'block';
+                }
+    
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                imgPreview.src = '#';
+                imgPreview.style.display = 'none';
+            }
+        });
+    </script>
 </x-app-layout>

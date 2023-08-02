@@ -1,5 +1,5 @@
 <x-app-layout>
-        <form action="/posts" method="POST">
+        <form action="/posts" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="title">
                 <h2>Title</h2>
@@ -9,8 +9,9 @@
                 <h2>Body</h2>
                 <textarea name="post[body]" placeholder="・どの講義でも必ずパソコンを使うため、バッテリーの持ちが悪くて大変"></textarea>
             </div>
-            <div class="image">
-                <h2>写真を入れる予定地</h2>
+            <div>
+                <input type="file" name="image" id="imageInput">
+                <img id="imagePreview" src="#" alt="プレビュー画像" style="display:none; max-width: 200px; max-height: 200px;">
             </div>
             <div class="os">
                 <h2>osを選択してください</h2>
@@ -54,4 +55,24 @@
         <div class="footer">
             <a class="ml-2 px-4 py-2 bg-gray-200 rounded" href="/">戻る</a>
         </div>
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function () {
+            const fileInput = this;
+            const imgPreview = document.getElementById('imagePreview');
+    
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+    
+                reader.onload = function (e) {
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = 'block';
+                }
+    
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                imgPreview.src = '#';
+                imgPreview.style.display = 'none';
+            }
+        });
+    </script>
 </x-app-layout>

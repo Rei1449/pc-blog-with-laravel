@@ -8,20 +8,25 @@
                 <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2'>
                     <h2 class='title'>{{ $post->title }}</h2>
                     <p class='title'>{{ $post->body }}</p>
+                    @if ($post->image_path)
+                        <img src="{{ $post->image_path }}" alt="記事の画像">
+                    @endif
                     <p class='user_name'>{{ $post->user->name }}</p>
                     <p class='os'>{{ $post->os }}</p>
                     <p class='cost'>{{ $post->cost }}</p>
                     <p class='weight'>{{ $post->weight }}</p>
                     <p class='battery'>{{ $post->battery }}</p>
                     <span class='created_at'>{{ $post->created_at }}</span>
-                    @if($post->user->name == Auth::user()->name)
-                        <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <button type="button" onclick="deletePost({{ $post->id }})">削除</button> 
-                        </form>
-                        <div class="edit"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
-                    @endif
+                    @auth
+                        @if($post->user->name == Auth::user()->name)
+                            <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="button" onclick="deletePost({{ $post->id }})">削除</button> 
+                            </form>
+                            <div class="edit"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
+                        @endif
+                    @endauth
                 </div>
                 @auth
                     <div class="flex">
