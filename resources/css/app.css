@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.w-custom {
+  width: 430px;
+}
+
+.w-comment {
+  width: 500px;
+}
+
+.h-custom {
+    max-height: 500px;
+}

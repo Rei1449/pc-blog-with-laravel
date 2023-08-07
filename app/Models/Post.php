@@ -19,6 +19,7 @@ class Post extends Model
         'battery',
         'user_id',
         'purchase_path',
+        'star_rating',
     ];
     
     public function user()

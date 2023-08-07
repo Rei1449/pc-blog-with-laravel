@@ -65,10 +65,13 @@
                     </div>
                     <div class="flex">
                         <p class='os'>{{ $post->os }}</p>
-                        <span class='created_at ml-auto'>投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
+                        <span class='ml-auto'>投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
+                    </div>
+                    <div>
+                        おすすめ度<i class="text-yellow-400 fa-solid fa-star"></i>×{{ $post->star_rating }}
                     </div>
                     <div class="flex justify-center">
-                        <a class="p-4 bg-white rounded" href="/posts/{{ $post->id }}">記事の詳細を見る</a>
+                        <a class="p-4 bg-white hover:bg-gray-300 rounded transition duration-500 ease-in-out" href="/posts/{{ $post->id }}">記事の詳細を見る</a>
                     </div>
                 </div>
             @endforeach

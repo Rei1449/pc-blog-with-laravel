@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="header">
+        <div class='text-4xl'>いいね数<i class="text-red-400 fa-solid fa-heart"></i>ランキング</div>
+    </x-slot>
     @php
         $counter = 1;
     @endphp
@@ -63,7 +66,12 @@
                         <p class='os'>{{ $post->os }}</p>
                         <span class='created_at ml-auto'>投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
                     </div>
-                    <a href='/posts/{{ $post->id }}/comment'>コメント</a>
+                    <div>
+                        おすすめ度<i class="text-yellow-400 fa-solid fa-star"></i>×{{ $post->star_rating }}
+                    </div>
+                    <div class="flex justify-center">
+                        <a class="p-4 bg-white rounded" href="/posts/{{ $post->id }}">記事の詳細を見る</a>
+                    </div>
                     @php
                         $counter++;
                     @endphp
