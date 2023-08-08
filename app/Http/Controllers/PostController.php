@@ -31,6 +31,9 @@ class PostController extends Controller
     
     public function store(Request $request, Post $post)
     {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg|max:5100',
+        ]);
         $input = $request['post'];
         if ($request->hasFile('image')) {
             $image_path = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
@@ -48,19 +51,19 @@ class PostController extends Controller
     
     public function update(Request $request, Post $post)
     {
+        $request->validate([
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ]);
         $input = $request['post'];
-        $post->fill($input); // この行にセミコロンがなかったため、エラーが発生します。
+        $post->fill($input); 
         if ($request->has('image_delete')) {
-            //dd($post);
             $post->image_path = null;
         }
         if ($request->hasFile('image')) {
-            dd($post);
             $image_path = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-            // 新しい画像のURLを直接モデルの属性に代入
+            
             $post->image_path = $image_path;
         }
-        // 画像の更新情報を反映させるためにfill()メソッドを使用しない
         $post->save();
         return redirect('/posts/' . $post->id);
     }

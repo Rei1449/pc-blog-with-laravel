@@ -18,9 +18,12 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="bg-gray-700 text-white text-5xl">
-            大学PCナビゲーター
+        <div class="flex sm:justify-start justify-center bg-gray-700">
+            <div class="text-white text-5xl">
+                大学PCナビゲーター
+            </div>
         </div>
+        
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 

@@ -66,6 +66,10 @@
                     <input type="radio" class="form-radio" name="grade" value="university" {{ old('grade') === 'university' ? 'checked' : '' }}>
                     <span class="ml-2">{{ __('大学') }}</span>
                 </label>
+                <label class="inline-flex items-center ml-4">
+                    <input type="radio" class="form-radio" name="grade" value="other" {{ old('grade') === 'university' ? 'checked' : '' }}>
+                    <span class="ml-2">{{ __('その他') }}</span>
+                </label>
             </div>
             <x-input-error :messages="$errors->get('grade')" class="mt-2" />
         </div>
