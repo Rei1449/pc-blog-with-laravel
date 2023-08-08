@@ -73,15 +73,15 @@
                     <div class="flex justify-center sm:justify-start">
                         <div class='p-4 my-2 bg-gray-100 shadow sm:rounded-lg w-custom'>
                             <div>おすすめ度を選択してください(5が高く、1が小さい評価です)<i class="text-yellow-400 fa-solid fa-star"></i><span class="text-red-600">*</span></div>
-                            <input type="radio" name="post[star_rating]" value="1" id="star_rating1" {{ $post->star_rating === '星1' ? 'checked' : '' }}>
+                            <input type="radio" name="post[star_rating]" value="1" id="star_rating1" {{ $post->star_rating === '1' ? 'checked' : '' }}>
                             <label for="option1"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">1</span></label>
-                            <input type="radio" name="post[star_rating]" value="2" id="star_rating2" {{ $post->star_rating === '星2' ? 'checked' : '' }}>
+                            <input type="radio" name="post[star_rating]" value="2" id="star_rating2" {{ $post->star_rating === '2' ? 'checked' : '' }}>
                             <label for="option2"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">2</span></label>
-                            <input type="radio" name="post[star_rating]" value="3" id="star_rating3" {{ $post->star_rating === '星3' ? 'checked' : '' }}>
+                            <input type="radio" name="post[star_rating]" value="3" id="star_rating3" {{ $post->star_rating === '3' ? 'checked' : '' }}>
                             <label for="option3"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">3</span></label>
-                            <input type="radio" name="post[star_rating]" value="4" id="star_rating4" {{ $post->star_rating === '星4' ? 'checked' : '' }}>
+                            <input type="radio" name="post[star_rating]" value="4" id="star_rating4" {{ $post->star_rating === '4' ? 'checked' : '' }}>
                             <label for="option4"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">4</span></label>
-                            <input type="radio" name="post[star_rating]" value="5" id="star_rating5" {{ $post->star_rating === '星5' ? 'checked' : '' }}>
+                            <input type="radio" name="post[star_rating]" value="5" id="star_rating5" {{ $post->star_rating === '5' ? 'checked' : '' }}>
                             <label for="option5"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">5</span></label>
                         </div>
                     </div>
