@@ -22,6 +22,19 @@ class Post extends Model
         'star_rating',
     ];
     
+    public static $rules = [
+        'title' => 'required|string|max:100',
+        'body' => 'nullable|string|max:300',
+        'image_path' => 'nullable|string|max:255',
+        'os' => 'required|string|max:10',
+        'cost' => 'required|string|max:20',
+        'weight' => 'required|string|max:10',
+        'battery' => 'required|string|max:10',
+        'user_id' => 'required|integer|exists:users,id', 
+        'purchase_path' => 'nullable|string|max:600',
+        'star_rating' => 'required|string|max:255',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);

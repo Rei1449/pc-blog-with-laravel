@@ -32,7 +32,7 @@ class PostController extends Controller
     public function store(Request $request, Post $post)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg|max:5100',
         ]);
         $input = $request['post'];
         if ($request->hasFile('image')) {

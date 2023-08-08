@@ -8,11 +8,11 @@
                 <form action="/posts" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="title">
-                        <div class="text-2xl">PC名<span class="text-red-600">*</span></div>
+                        <div class="text-2xl">PC名(50文字まで)<span class="text-red-600">*</span></div>
                         <input type="text" name="post[title]" class="w-full" placeholder="PC名を入れてください" value="{{ old('post.title') }}"/>
                     </div>
                     <div class="body">
-                        <div class="text-2xl">使った感想、良い点や悪い点など<span class="text-red-600">*</span></div>
+                        <div class="text-2xl">使った感想、良い点や悪い点など(300文字まで)<span class="text-red-600">*</span></div>
                         <textarea name="post[body]" class="w-full" placeholder="バッテリーの持ちが悪い！,講義では問題なく利用できる！,軽くて持ち運びが楽！など" value="{{ old('post.body') }}"></textarea>
                     </div>
                     <div>
@@ -80,7 +80,6 @@
                     </div>
                     <input type="hidden" name="post[user_id]" value="{{ $user->id }}">
                     <div class="text-red-400">「<span class="text-red-600">*</span>」がついているものは必ず記入or選択してください！</div>
-                    
                     <input class="mt-3 px-4 py-2 bg-blue-300 hover:bg-blue-700 rounded w-full transition duration-500 ease-in-out" type="submit" value="投稿"/>
                 </form>
             </div>
