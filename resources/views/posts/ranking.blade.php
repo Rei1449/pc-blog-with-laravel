@@ -57,7 +57,7 @@
                             <p class="text-red-400">：{{ $post->likeCount() }}</p>
                         @endauth
                     </h2>
-                    <div class="flex">
+                    <div class="sm:flex">
                         <p class="text-2xl">{{ $post->user->name }}</p>
                         <p class='text-2xl ml-auto mr-2'>大学名:{{ $post->user->university_name }}</p>
                         <p class='text-2xl'>{{ $post->user->faculty }}</p>
