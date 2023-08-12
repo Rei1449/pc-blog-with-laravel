@@ -4,13 +4,13 @@
     </x-slot>
     <div class="py-12">
         <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
-            <div class="content">
+            <div>
                 <div class="sm:flex sm:justify-center">
                     <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 w-auto'>
                         <div class='text-4xl text-center font-bold break-words'>{{ $post->title }}</div>
                     </div>
                 </div>
-                <div class="sm:flex justify-between">
+                <div class="sm:flex sm:justify-between">
                     <div class='p-4 bg-white shadow sm:rounded-lg mb-2 w-auto'>
                         <div class='text-2xl text-center'>投稿者：{{ $post->user->name }}</div>
                     </div>
@@ -18,15 +18,7 @@
                         <div class='text-2xl text-center'>大学名 <i class="fa-solid fa-school"></i>：{{ $post->user->university_name }}{{ $post->user->faculty }}</div>
                     </div>
                 </div>
-                 <div class="sm:flex justify-between">
-                    <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 w-auto'>
-                        <div class='text-2xl text-center'>おすすめ度：<i class="text-yellow-400 fa-solid fa-star"></i>×{{ $post->star_rating }}</div>
-                    </div>
-                    <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 w-auto'>
-                        <div class='text-2xl text-center'>OS <i class="fa-solid fa-desktop"></i>：{{ $post->os }}</div>
-                    </div>
-                </div>
-                <div class="sm:flex justify-between">
+                <div class="sm:flex sm:justify-between">
                     <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 w-auto'>
                         <div class='text-2xl text-center'>値段帯 <i class="text-yellow-400 fa-solid fa-sack-dollar"></i>：{{ $post->cost }}</div>
                     </div>
@@ -37,17 +29,29 @@
                         <div class='text-2xl text-center'>バッテリー駆動目安時間 <i class="text-green-400 fa-solid fa-battery-three-quarters"></i>：{{ $post->battery }}</div>
                     </div>
                 </div>
-                <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2'>
-                    <p class='text-2xl text-center'>使った感想、お勧めできる点・できない点など</p>
-                    <br>
-                    <p class='text-lg break-words'>{{ $post->body }}</p>
-                    @if ($post->purchase_path)
-                        <br>
-                        <div class=''><a href='{{ $post->purchase_path }}'>購入する<i class="fa-solid fa-arrow-up-right-from-square"></i></a><span class='text-red-600'><br>※URLが古い場合があります。また、在庫がない場合があります。　</span><a href='{{ $post->purchase_path }}'><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
-                    @endif
+                <div class="sm:flex">
+                    <div class="sm:w-3/12">
+                        <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 w-auto'>
+                            <div class='text-2xl text-center'>おすすめ度：<i class="text-yellow-400 fa-solid fa-star"></i>×{{ $post->star_rating }}</div>
+                        </div>
+                        <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 w-auto'>
+                            <div class='text-2xl text-center'>OS <i class="fa-solid fa-desktop"></i>：{{ $post->os }}</div>
+                        </div>
+                    </div>
+                    <div class="sm:ml-4 sm:w-9/12">
+                        <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2'>
+                            <p class='text-2xl text-center'>使った感想、お勧めできる点・できない点など</p>
+                            <br>
+                            <p class='text-lg break-words'>{{ $post->body }}</p>
+                            @if ($post->purchase_path)
+                                <br>
+                                <div class=''><a href='{{ $post->purchase_path }}'>購入する<i class="fa-solid fa-arrow-up-right-from-square"></i></a><span class='text-red-600'><br>※URLが古い場合があります。また、在庫がない場合があります。　</span><a href='{{ $post->purchase_path }}'><i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 @if ($post->image_path)
-                        <div class="sm:flex sm:justify-center">
+                        <div class="flex justify-center">
                             <img class='h-custom' src="{{ $post->image_path }}" alt="記事の画像">
                         </div>
                         
@@ -60,16 +64,16 @@
                 @auth
                     @if($post->user->name == Auth::user()->name)
                         <div class='flex justify-between'>
-                            <div class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded my-2 ml-4 transition duration-500 ease-in-out"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
+                            <div class="bg-blue-500 hover:bg-blue-800 text-white p-2 rounded my-2 ml-4 transition duration-500 ease-in-out text-2xl"><a href="/posts/{{ $post->id }}/edit">編集</a></div>
                             <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
                                 @csrf
                                 @method('delete')
-                                <button type="button" onclick="deletePost({{ $post->id }})" class="bg-red-500 hover:bg-red-800 text-white p-2 rounded my-2 mr-4 transition duration-500 ease-in-out">削除</button> 
+                                <button type="button" onclick="deletePost({{ $post->id }})" class="bg-red-500 hover:bg-red-800 text-white p-2 rounded my-2 mr-4 transition duration-500 ease-in-out text-2xl">削除</button> 
                             </form>
                         </div>
                     @endif
                     <div class="flex">
-                        <button id="commentButton" class="bg-gray-900 hover:bg-gray-500 text-white p-2 rounded mb-2 transition duration-500 ease-in-out">コメントする</button>
+                        <button id="commentButton" class="text-2xl bg-gray-900 hover:bg-gray-500 text-white p-2 rounded mb-2 transition duration-500 ease-in-out">コメントする</button>
                         <div class="flex ml-auto text-4xl">
                             <div class="text-blue-700 mr-2">
                                 @if (!Auth::user()->is_bookmark($post->id))
@@ -127,7 +131,9 @@
                 <div class="py-12">
                     <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
                         @if ($post->comments->count() > 0)
-                            <div class='text-2xl'>コメント一覧</div>
+                            <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg mb-2 sm:inline-block'>
+                                <div class='text-2xl text-center'>コメント一覧</div>
+                            </div>
                             @foreach ($post->comments as $comment)
                                 <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg'>
                                     <p class='break-words'>{{ $comment->body }}</p>

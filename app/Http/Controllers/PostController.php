@@ -52,7 +52,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg|max:5100',
         ]);
         $input = $request['post'];
         $post->fill($input); 
@@ -96,8 +96,8 @@ class PostController extends Controller
     {
         $posts = Post::with('user') // ユーザー情報をロードする例（必要に応じて変更してください）
             ->withCount('likedBy')
-            ->having('liked_by_count', '>=', 1)
-            ->orderByRaw('liked_by_count DESC') // いいねの数に基づいて降順で並び替える
+            ->havingRaw('liked_by_count >= ?', [1])
+            ->orderByDesc('liked_by_count') // いいねの数に基づいて降順で並び替える
             ->paginate(10);
     
         return view('posts.ranking', compact('posts'));
