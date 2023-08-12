@@ -94,9 +94,8 @@ class PostController extends Controller
     
     public function ranking()
     {
-        $posts = Post::with('user') // ユーザー情報をロードする例（必要に応じて変更してください）
+        $posts = Post::with('user')
             ->withCount('likedBy')
-            ->havingRaw('liked_by_count >= ?', [1])
             ->orderByDesc('liked_by_count') // いいねの数に基づいて降順で並び替える
             ->paginate(10);
     
