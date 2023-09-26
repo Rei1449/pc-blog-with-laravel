@@ -107,6 +107,13 @@
                     {{ __('マイページ') }}
                 </x-responsive-nav-link>
             </div>
+            @if( Auth::user()->grade === 'university')
+                <div class="pt-2 pb-3 space-y-1">
+                    <x-responsive-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
+                        {{ __('記事作成') }}
+                    </x-responsive-nav-link>
+                </div>
+            @endif
             
     
             <!-- Responsive Settings Options -->
