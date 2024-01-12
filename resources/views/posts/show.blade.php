@@ -64,7 +64,7 @@
                     <p class="mb-6 text-gray-500 sm:text-lg md:mb-8">{{ $post->body }}</p>
             
                     <h2 class="mb-2 text-center text-xl font-semibold text-gray-800 sm:text-2xl md:mb-4 md:text-left">コメント</h2>
-                    
+                    @auth
                     <button id="commentButton" class="my-8 py-1.5 px-4 transition-colors bg-gray-50 border active:bg-blue-800 font-medium border-gray-200 hover:text-white text-blue-600 hover:border-blue-700 rounded-lg hover:bg-blue-600 disabled:opacity-50">
                         コメントする
                     </button>
@@ -87,6 +87,7 @@
                             </div>
                         </form>
                     </div>
+                    @endauth
                     @if ($post->comments->count() > 0)
                         @foreach ($post->comments as $comment)
                             <p class="mb-6 text-gray-500 sm:text-lg md:mb-8">{{ $comment->body }}</p>
