@@ -16,6 +16,11 @@ class PostController extends Controller
         return view('home')->with(['posts' => $post->getPaginateBylimit()]);
     }
     
+    public function try(Post $post)
+    {
+        return view('try')->with(['posts' => $post->getPaginateBylimit(12)]);
+    }
+    
     public function show(Post $post)
     {
         $user = Auth::user();
@@ -32,7 +37,7 @@ class PostController extends Controller
     public function store(Request $request, Post $post)
     {
         $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg|max:5100',
+            'image' => 'image|mimes:jpeg,png,jpg,JPEG,PNG,JPG|max:5100',
         ]);
         $input = $request['post'];
         if ($request->hasFile('image')) {

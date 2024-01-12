@@ -2,87 +2,75 @@
     <x-slot name="header">
         <div class="flex">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-4">
-                <a href="{{ route('bookmarks') }}">{{ __('投稿した記事') }}</a>
-            </h2>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-4">
                 <a href="{{ route('profile.edit') }}">{{ __('プロフィール') }}</a>
             </h2>
+            @if (Auth::user()->grade == "university")
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-4">
-                <a href="{{ route('bookmarks') }}">{{ __('ブックマーク') }}</a>
+                <a href="{{ route('submitted') }}">{{ __('投稿した記事') }}</a>
             </h2>
+            @endif
         </div>
     </x-slot>
-    <div class="py-12">
-        <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
-            @foreach ($posts as $post)
-                <div class='p-4 sm:p-8 
-                    @if ($post->user->humanities_or_science === 'science')
-                        bg-blue-100
-                    @elseif ($post->user->humanities_or_science === 'humanities')
-                        bg-red-100
-                    @elseif ($post->user->humanities_or_science === 'speciality')
-                        bg-green-100
-                    @endif 
-                    shadow sm:rounded-lg'>
-                    <h2 class='text-4xl border-b-4 border-gray-100 flex'>
-                        <a class="font-bold" href="/posts/{{ $post->id }}">{{ Str::limit($post->title, 20) }}</a>
-                        @auth
-                            <div class="ml-auto flex">
-                                <div class="text-blue-700 mr-2">
-                                    @if (!Auth::user()->is_bookmark($post->id))
-                                    <form action="{{ route('bookmark.store', $post) }}" method="post">
-                                        @csrf
-                                        <button><i class="fa-regular fa-bookmark"></i></button>
-                                    </form>
-                                    @else
-                                    <form action="{{ route('bookmark.destroy', $post) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button><i class="fa-solid fa-bookmark"></i></button>
-                                    </form>
-                                    @endif
-                                </div>
-                                <div class="text-red-400">
-                                    @if (!Auth::user()->is_like($post->id))
-                                    <form action="{{ route('like.store', $post) }}" method="post">
-                                        @csrf
-                                        <button><i class="fa-regular fa-heart"></i></button>
-                                    </form>
-                                    @else
-                                    <form action="{{ route('like.destroy', $post) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <button><i class="fa-solid fa-heart"></i></button>
-                                    </form>
-                                    @endif
-                                </div>
-                            </div>
-                            <p class="text-red-400">：{{ $post->likeCount() }}</p>
-                        @else
-                            <div class="ml-auto text-red-400"><i class="fa-regular fa-heart"></i></div>
-                            <p class="text-red-400">：{{ $post->likeCount() }}</p>
-                        @endauth
-                    </h2>
-                    <div class="sm:flex">
-                        <p class="text-2xl">{{ $post->user->name }}</p>
-                        <p class='text-2xl ml-auto mr-2'>大学名:{{ $post->user->university_name }}</p>
-                        <p class='text-2xl'>{{ $post->user->faculty }}</p>
-                    </div>
-                    <div class="flex">
-                        <p class='os'>{{ $post->os }}</p>
-                        <span class='created_at ml-auto'>投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
-                    </div>
-                    <div>
-                        おすすめ度<i class="text-yellow-400 fa-solid fa-star"></i>×{{ $post->star_rating }}
-                    </div>
-                    <div class="flex justify-center">
-                        <a class="p-4 bg-white rounded" href="/posts/{{ $post->id }}">記事の詳細を見る</a>
-                    </div>
-                </div>
-            @endforeach
+    <div class="bg-white py-6 sm:py-8 lg:py-12">
+      <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+        <!-- text - start -->
+        <div class="mb-10 md:mb-16">
+            <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">自分の投稿一覧</h2>
+
         </div>
-    </div>
-    <div class='paginate'>
-                {{ $posts->links() }}
+        <!-- text - end -->
+    
+        <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
+            @foreach ($posts as $post)
+          <!-- article - start -->
+                <div class="flex flex-col overflow-hidden rounded-lg border bg-white">
+                    <a href="/posts/{{ $post->id }}" class="group relative block h-48 overflow-hidden bg-gray-100 md:h-64">
+                        <img src="{{ $post->image_path }}" loading="lazy" alt="Photo by Minh Pham" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+                    </a>
+    
+                    <div class="flex flex-1 flex-col p-4 sm:p-6">
+                        <h2 class="mb-2 text-lg font-semibold text-gray-800">
+                            <a href="/posts/{{ $post->id }}" class="transition duration-100 hover:text-indigo-500 active:text-indigo-600">{{ $post->title }}</a>
+                        </h2>
+    
+              <!--<p class="mb-8 text-gray-500">This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of a real written text.</p>-->
+    
+              <div class="mt-auto flex items-end justify-between">
+                <div class="flex items-center gap-2">
+                  <div>
+                    <span class="block text-indigo-500">{{ $post->user->name }}</span>
+                    <span class="block text-sm text-gray-400">{{ $post->user->university_name }}</span>
+                    <span class="block text-sm text-gray-400">投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
+                  </div>
+                </div>
+    
+                <span class="rounded border px-2 py-1 text-sm text-gray-500">
+                    <div class="text-red-400">
+                        @if (!Auth::user()->is_like($post->id))
+                        <form action="{{ route('like.store', $post) }}" method="post">
+                            @csrf
+                            <button><i class="fa-regular fa-heart"></i></button>
+                        </form>
+                        @else
+                        <form action="{{ route('like.destroy', $post) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button><i class="fa-solid fa-heart"></i></button>
+                        </form>
+                        @endif
+                    </div>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- article - end -->
+          @endforeach
+        </div>
+        
+        <div class="my-4">
+            {{ $posts->links() }}
+        </div>
+
+      </div>
     </div>
 </x-app-layout>

@@ -1,130 +1,81 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<section>
+    <div class="flex flex-col justify-center min- py-12 sm:px-6 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 class="mt-6 text-3xl font-extrabold text-center text-neutral-600">ユーザー登録</h2>
+        </div>
 
-        <!-- Name -->
-        <div>
-            <div class="flex">
-                <x-input-label for="name" :value="__('名前（表示名）')" />
-                <span class="text-red-600">*</span>
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div class="px-4 py-8 sm:px-10">
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700"> 名前 </label>
+                        <div class="mt-1">
+                            <input id="name" name="name" type="text" autocomplete="name" required class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700"> メールアドレス </label>
+                        <div class="mt-1">
+                            <input id="email" name="email" type="email" autocomplete="email" required class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700"> パスワード </label>
+                        <div class="mt-1">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700"> パスワード確認用 </label>
+                        <div class="mt-1">
+                            <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                        </div>
+                    </div>
+                    
+                    <div class="mt-1">
+                        <div class="block text-sm font-medium text-gray-700">大学かその他かを選択してください</div>
+                    </div>
+                    
+                    <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <input id="radio-1" type="radio" value="university" name="grade" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">大学生</label>
+                    </div>
+                    <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                        <input checked id="radio-2" type="radio" value="other" name="grade" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">その他</label>
+                    </div>
+                    <x-input-error :messages="$errors->get('grade')" class="mt-2" />
+                    
+                    <div>
+                        <label for="university_name" class="block text-sm font-medium text-gray-700"> 大学名・学部（大学を選択した方のみ） </label>
+                        <div class="mt-1">
+                            <input id="university_name" name="university_name" type="text" autocomplete="university_name" class="block w-full px-5 py-3 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300">
+                            <x-input-error :messages="$errors->get('university_name')" class="mt-2" />
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+
+                        <div class="text-sm">
+                            <a href="{{ route('login') }}" class="font-medium text-blue-600 hover:text-blue-500"> 登録済みの方はこちら </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-blue-600 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">登録</button>
+                    </div>
+                </form>
             </div>
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="ほかの人に見えるため、常識的な名前でお願いします"/>
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <div class="flex">
-                <x-input-label for="email" :value="__('メールアドレス')" />
-                <span class="text-red-600">*</span>
-            </div>
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="例)abc@gmail.com"/>
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <div class="flex">
-                <x-input-label for="password" :value="__('パスワード(8文字以上)')" />
-                <span class="text-red-600">*</span>
-            </div>
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <div class="flex">
-                <x-input-label for="password_confirmation" :value="__('パスワード確認用')" />
-                <span class="text-red-600">*</span>
-            </div>
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <!-- Grade -->
-        <div class="mt-4">
-            <div class="flex">
-                <x-input-label :value="__('学年')" />
-                <span class="text-red-600">*</span>
-            </div>
-            <div>
-                <label class="inline-flex items-center">
-                    <input type="radio" class="form-radio" name="grade" value="high_school" {{ old('grade') === 'high_school' ? 'checked' : '' }}>
-                    <span class="ml-2">{{ __('高校') }}</span>
-                </label>
-                <label class="inline-flex items-center ml-4">
-                    <input type="radio" class="form-radio" name="grade" value="university" {{ old('grade') === 'university' ? 'checked' : '' }}>
-                    <span class="ml-2">{{ __('大学') }}</span>
-                </label>
-                <label class="inline-flex items-center ml-4">
-                    <input type="radio" class="form-radio" name="grade" value="other" {{ old('grade') === 'university' ? 'checked' : '' }}>
-                    <span class="ml-2">{{ __('その他') }}</span>
-                </label>
-            </div>
-            <x-input-error :messages="$errors->get('grade')" class="mt-2" />
-        </div>
-        
-        <div class="mt-4 text-red-500">
-            以下は大学を選択した方のみ
-        </div>
-        <!-- University Name -->
-        <div class="mt-4">
-            <div class="flex">
-                <x-input-label for="university_name" :value="__('学校名')" />
-                <span class="text-red-600">*</span>
-            </div>
-            <x-text-input id="university_name" class="block mt-1 w-full" type="text" name="university_name" :value="old('university_name')" placeholder="正式名称を入力してください！"/>
-            <x-input-error :messages="$errors->get('university_name')" class="mt-2" />
-        </div>
-
-        <!-- Humanities or Science -->
-        <div class="mt-4">
-            <div class="flex">
-                <x-input-label :value="__('文理選択')" />
-                <span class="text-red-600">*</span>
-            </div>
-            <div>
-                <label class="inline-flex items-center">
-                    <input type="radio" class="form-radio" name="humanities_or_science" value="humanities" {{ old('humanities_or_science') === 'humanities' ? 'checked' : '' }}>
-                    <span class="ml-2">{{ __('文系') }}</span>
-                </label>
-                <label class="inline-flex items-center ml-4">
-                    <input type="radio" class="form-radio" name="humanities_or_science" value="science" {{ old('humanities_or_science') === 'science' ? 'checked' : '' }}>
-                    <span class="ml-2">{{ __('理系') }}</span>
-                </label>
-                <label class="inline-flex items-center ml-4">
-                    <input type="radio" class="form-radio" name="humanities_or_science" value="speciality" {{ old('humanities_or_science') === 'speciality' ? 'checked' : '' }}>
-                    <span class="ml-2">{{ __('専門') }}</span>
-                </label>
-            </div>
-            <x-input-error :messages="$errors->get('humanities_or_science')" class="mt-2" />
-        </div>
-
-        <!-- Faculty -->
-        <div class="mt-4">
-            <x-input-label for="faculty" :value="__('学部')" />
-            <x-text-input id="faculty" class="block mt-1 w-full" type="text" name="faculty" :value="old('faculty')" />
-            <x-input-error :messages="$errors->get('faculty')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
+</section>
 </x-guest-layout>

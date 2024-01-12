@@ -2,14 +2,13 @@
     <x-slot name="header">
         <div class="flex">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-4">
-                <a href="{{ route('submitted') }}">{{ __('投稿した記事') }}</a>
-            </h2>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-4">
                 <a href="{{ route('profile.edit') }}">{{ __('プロフィール') }}</a>
             </h2>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                <a href="{{ route('bookmarks') }}">{{ __('ブックマーク') }}</a>
+            @if (Auth::user()->grade == "university")
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight mr-4">
+                <a href="{{ route('submitted') }}">{{ __('投稿した記事') }}</a>
             </h2>
+            @endif
         </div>
     </x-slot>
 
@@ -26,13 +25,11 @@
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
-            <!-- アカウント消去は未実装
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     @include('profile.partials.delete-user-form')
                 </div>
             </div>
-            -->
         </div>
     </div>
 </x-app-layout>

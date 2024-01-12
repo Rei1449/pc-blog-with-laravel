@@ -16,16 +16,6 @@
         
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        
-        <style>
-            body {
-                background-image: url('https://res.cloudinary.com/dnbjhe8cr/image/upload/v1691813964/z9vv1ossbiav6nhjfpxb.jpg');
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
-            }
-            
-        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="flex sm:justify-start justify-center bg-gray-700">
