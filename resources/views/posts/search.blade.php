@@ -1,62 +1,72 @@
 <x-app-layout>
-    <x-slot name="header">
-        <a href='/posts/create'>記事作成</a>
-        <form action="{{ route('search') }}" method="GET">
-            <x-text-input id="search" name="keyword" type="text" class="mt-1 block w-full" placeholder="大学名または記事のタイトルを入力してください" />
-            <button type="submit">検索</button>
-        </form>
-    </x-slot>
-    <div class="py-12">
-        <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
-            @foreach ($posts as $post)
-                <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg'>
-                    <h2 class='title'>
-                        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
-                    </h2>
-                    <p class='user_name'>{{ $post->user->name }}</p>
-                    <p class='user_name'>{{ $post->user->university_name }}</p>
-                    <p class='os'>{{ $post->os }}</p>
-                    <p class='cost'>{{ $post->cost }}</p>
-                    <p class='weight'>{{ $post->weight }}</p>
-                    <p class='battery'>{{ $post->battery }}</p>
-                    <p class='body'>{{ $post->body }}</p>
-                    @auth
-                        <div class="post-control">
-                            @if (!Auth::user()->is_bookmark($post->id))
-                            <form action="{{ route('bookmark.store', $post) }}" method="post">
-                                @csrf
-                                <button><i class="fa-regular fa-bookmark"></i>お気に入り登録</button>
-                            </form>
-                            @else
-                            <form action="{{ route('bookmark.destroy', $post) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button><i class="fa-solid fa-bookmark"></i>お気に入り解除</button>
-                            </form>
-                            @endif
-                            @if (!Auth::user()->is_like($post->id))
-                            <form action="{{ route('like.store', $post) }}" method="post">
-                                @csrf
-                                <button><i class="fa-regular fa-heart"></i>いいね登録</button>
-                            </form>
-                            @else
-                            <form action="{{ route('like.destroy', $post) }}" method="post">
-                                @csrf
-                                @method('delete')
-                                <button><i class="fa-solid fa-heart"></i>いいね解除</button>
-                            </form>
-                            @endif
-                        </div>
-                    @endauth
-                    <p>いいね数: {{ $post->likeCount() }}</p>
-                    <a href='/posts/{{ $post->id }}/comment'>コメント</a>
-                    <br>
-                    <span class='created_at'>{{ $post->created_at }}</span>
+    <div class="bg-white py-6 sm:py-8 lg:py-12">
+      <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+        <!-- text - start -->
+        <div class="mb-10 md:mb-16">
+            <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">投稿一覧</h2>
+            <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">PC名or大学名で検索できます</p>
+            <form action="{{ route('search') }}" method="GET" class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
+                <x-text-input id="search" name="keyword" type="text" class="mt-1 block w-full flex-shrink-0" placeholder="大学名または記事のタイトルを入力してください" />
+                
+                <div class="flex items-center text-center justify-center"> <!-- flexを追加 -->
+                    <button type="submit" class="ml-2 px-4 py-2 bg-black text-white rounded">検索</button>
                 </div>
-            @endforeach
+            </form>
+
         </div>
-    </div>
-    <div class='paginate'>
-        {{ $posts->links() }}
+        <!-- text - end -->
+    
+        <div class="grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-8">
+            @foreach ($posts as $post)
+          <!-- article - start -->
+                <div class="flex flex-col overflow-hidden rounded-lg border bg-white">
+                    <a href="/posts/{{ $post->id }}" class="group relative block h-48 overflow-hidden bg-gray-100 md:h-64">
+                        <img src="{{ $post->image_path }}" loading="lazy" alt="Photo by Minh Pham" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
+                    </a>
+    
+                    <div class="flex flex-1 flex-col p-4 sm:p-6">
+                        <h2 class="mb-2 text-lg font-semibold text-gray-800">
+                            <a href="/posts/{{ $post->id }}" class="transition duration-100 hover:text-indigo-500 active:text-indigo-600">{{ $post->title }}</a>
+                        </h2>
+    
+              <!--<p class="mb-8 text-gray-500">This is a section of some simple filler text, also known as placeholder text. It shares some characteristics of a real written text.</p>-->
+    
+              <div class="mt-auto flex items-end justify-between">
+                <div class="flex items-center gap-2">
+                  <div>
+                    <span class="block text-indigo-500">{{ $post->user->name }}</span>
+                    <span class="block text-sm text-gray-400">{{ $post->user->university_name }}</span>
+                    <span class="block text-sm text-gray-400">投稿日:{{ $post->created_at->format('Y-m-d') }}</span>
+                  </div>
+                </div>
+    
+                <span class="rounded border px-2 py-1 text-sm text-gray-500">
+                    <div class="text-red-400">
+                        @if (!Auth::user()->is_like($post->id))
+                        <form action="{{ route('like.store', $post) }}" method="post">
+                            @csrf
+                            <button><i class="fa-regular fa-heart"></i></button>
+                        </form>
+                        @else
+                        <form action="{{ route('like.destroy', $post) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button><i class="fa-solid fa-heart"></i></button>
+                        </form>
+                        @endif
+                    </div>
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- article - end -->
+          @endforeach
+        </div>
+        
+        <div class="my-4">
+            {{ $posts->links() }}
+        </div>
+
+      </div>
     </div>
 </x-app-layout>

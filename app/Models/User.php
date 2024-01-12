@@ -24,8 +24,6 @@ class User extends Authenticatable
         'password',
         'grade',
         'university_name',
-        'humanities_or_science',
-        'faculty',
     ];
 
     /**
@@ -59,19 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
     
-    public function replies()
-    {
-        return $this->hasMany(Reply::class);
-    }    
-    
     public function likes()
     {
         return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id')->withTimestamps();
-    }
-    
-    public function bookmarks()
-    {
-        return $this->belongsToMany(Post::class, 'bookmarks', 'user_id', 'post_id')->withTimestamps();
     }
     
     public function is_like($postId)
@@ -79,8 +67,4 @@ class User extends Authenticatable
         return $this->likes()->where('post_id', $postId)->exists();
     }
     
-    public function is_bookmark($postId)
-    {
-        return $this->bookmarks()->where('post_id', $postId)->exists();
-    }
 }

@@ -10,29 +10,23 @@ class Post extends Model
     use HasFactory;
     
     protected $fillable = [
+        'user_id',
         'title',
         'body',
         'image_path',
         'os',
         'cost',
-        'weight',
-        'battery',
-        'user_id',
-        'purchase_path',
         'star_rating',
     ];
     
     public static $rules = [
+        'user_id' => 'required', 
         'title' => 'required|string|max:100',
-        'body' => 'nullable|string|max:300',
-        'image_path' => 'nullable|string|max:255',
-        'os' => 'required|string|max:10',
-        'cost' => 'required|string|max:20',
-        'weight' => 'required|string|max:10',
-        'battery' => 'required|string|max:10',
-        'user_id' => 'required|integer|exists:users,id', 
-        'purchase_path' => 'nullable|string|max:600',
-        'star_rating' => 'required|string|max:255',
+        'body' => 'required|string|max:300',
+        'image_path' => 'required|string|max:255',
+        'os' => 'required',
+        'cost' => 'required',
+        'star_rating' => 'required',
     ];
     
     public function user()
@@ -53,11 +47,6 @@ class Post extends Model
     public function likeCount()
     {
         return $this->likedBy()->count();
-    }
-    
-    public function bookmarkedBy()
-    {
-        return $this->belongsToMany(User::class, 'bookmarks', 'post_id', 'user_id')->withTimestamps();
     }
     
     public function getByLimit(int $limit_count = 10)

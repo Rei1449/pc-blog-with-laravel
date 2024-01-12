@@ -37,8 +37,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'grade' => ['required', 'string', 'max:255'],
             'university_name' => ['nullable', 'string', 'max:255'],
-            'humanities_or_science' => ['nullable', 'string', 'max:255'],
-            'faculty' => ['nullable', 'string', 'max:255'],
         ]);
     
         $user = User::create([
@@ -47,8 +45,6 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'grade' => $request->grade,
             'university_name' => $request->university_name,
-            'humanities_or_science' => $request->humanities_or_science,
-            'faculty' => $request->faculty,
         ]);
     
         event(new Registered($user));
