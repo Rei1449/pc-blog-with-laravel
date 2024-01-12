@@ -61,9 +61,6 @@ class PostController extends Controller
         ]);
         $input = $request['post'];
         $post->fill($input); 
-        if ($request->has('image_delete')) {
-            $post->image_path = null;
-        }
         if ($request->hasFile('image')) {
             $image_path = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
             

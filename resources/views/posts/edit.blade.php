@@ -1,102 +1,130 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class='text-4xl'>記事編集</div>
-    </x-slot>
-    <div class="py-12">
-        <div class='max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6'>
-            <div class='p-4 sm:p-8 bg-white shadow sm:rounded-lg'>
-                <form action="/posts/{{ $post->id }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('put')
-                    <div class="title">
-                        <div class="text-2xl">PC名<span class="text-red-600">*</span></div>
-                        <input type="text" name="post[title]" class="w-full" placeholder="PC名を入れてください" value="{{ $post->title }}"/>
-                    </div>
-                    <div class="body">
-                        <div class="text-2xl">記事内容<span class="text-red-600">*</span></div>
-                        <textarea name="post[body]" class="w-full" placeholder="バッテリーの持ちが悪い！,講義では問題なく利用できる！,軽くて持ち運びが楽！など">{{ $post->body }}</textarea>
-                    </div>
-                    <div>
-                        @if ($post->image_path)
-                            <div class="text-2xl">編集前の画像</div>
-                            <img src="{{ $post->image_path }}" alt="記事の画像">
-                            <input type="checkbox" name="image_delete">編集前の画像を削除しますか？
-                            <div class="text-red-400">※新しい画像を入れる場合、チェックをしていなくても編集前の画像は削除されます</div>
-                        @endif
-                        <input type="file" name="image" id="imageInput">
-                        <img id="imagePreview" src="#" alt="プレビュー画像" style="display:none; max-width: 200px; max-height: 200px;">
-                    </div>
-                    <div class="xl:flex">
-                        <div class="flex-none sm:flex sm:justify-between">
-                            <div class="p-4 mb-2 bg-gray-50 shadow sm:rounded-lg sm:m-0 lg:m-0 xl:m-0">
-                                <div>osを選択してください <i class="fa-solid fa-desktop"></i><span class="text-red-600">*</span></div>
-                                <input type="radio" name="post[os]" value="Mac" id="mac" {{ $post->os === 'Mac' ? 'checked' : '' }}>
-                                <label for="option1">Mac</label>
-                                <input type="radio" name="post[os]" value="Windows" id="Windows" {{ $post->os === 'Windows' ? 'checked' : '' }}>
-                                <label for="option2">Windows</label>
-                            </div>
-                            <div class='p-4 mb-2 bg-gray-50 shadow sm:rounded-lg sm:m-0 lg:mr-28 xl:m-0'>
-                                <div>値段を選択してください <i class="text-yellow-400 fa-solid fa-sack-dollar"></i><span class="text-red-600">*</span></div>
-                                <input type="radio" name="post[cost]" value="8万円以下" id="cost1" {{ $post->cost === '8万円以下' ? 'checked' : '' }}>
-                                <label for="option1">8万円以下</label>
-                                <input type="radio" name="post[cost]" value="8万円~12万円" id="cost2" {{ $post->cost === '8万円~12万円' ? 'checked' : '' }}>
-                                <label for="option2">8~12万円</label>
-                                <input type="radio" name="post[cost]" value="12万円以上" id="cost3" {{ $post->cost === '12万円以上' ? 'checked' : '' }}>
-                                <label for="option3">12万円以上</label>
-                            </div>
-                        </div>
-                        <div class='flex-none sm:flex sm:justify-between'>
-                            <div class='p-4 mb-2 bg-gray-50 shadow sm:rounded-lg sm:m-0 lg:m-0 xl:m-0'>
-                                <div>重さを選択してください <i class="fa-solid fa-weight-hanging"></i><span class="text-red-600">*</span></div>
-                                <input type="radio" name="post[weight]" value="1.5kg以下" id="weight1" {{ $post->weight === '1.5kg以下' ? 'checked' : '' }}>
-                                <label for="option1">1.5kg以下</label>
-                                <input type="radio" name="post[weight]" value="1.5~2kg" id="weight2" {{ $post->weight === '1.5~2kg' ? 'checked' : '' }}>
-                                <label for="option2">1.5~2kg</label>
-                                <input type="radio" name="post[weight]" value="2kg以上" id="weight3" {{ $post->weight === '2kg以上' ? 'checked' : '' }}>
-                                <label for="option3">2kg以上</label>
-                            </div>
-                            <div class='p-4 mb-2 bg-gray-50 shadow sm:rounded-lg sm:m-0 lg:mr-28 xl:m-0'>
-                                <div>バッテリーの持続時間を選択してください <i class="text-green-400 fa-solid fa-battery-three-quarters"></i><span class="text-red-600">*</span></div>
-                                <input type="radio" name="post[battery]" value="3時間以下" id="battery1" {{ $post->battery === '3時間以下' ? 'checked' : '' }}>
-                                <label for="option1">3時間以下</label>
-                                <input type="radio" name="post[battery]" value="3時間~6時間" id="battery2" {{ $post->battery === '3時間~6時間' ? 'checked' : '' }}>
-                                <label for="option2">3時間~6時間</label>
-                                <input type="radio" name="post[battery]" value="6時間以上" id="battery3" {{ $post->battery === '6時間以上' ? 'checked' : '' }}>
-                                <label for="option3">6時間以上</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mt-3">購入用URL</div>
-                        <input type="text" name="post[purchase_path]" class="w-full" placeholder="PCが購入できるURLを入れてください(公式サイト、Amazonなど)" value="{{ $post->purchase_path }}"/>
-                    </div>
-                    <div class="flex justify-center sm:justify-start">
-                        <div class='p-4 my-2 bg-gray-100 shadow sm:rounded-lg w-custom'>
-                            <div>おすすめ度を選択してください(5が高く、1が小さい評価です)<i class="text-yellow-400 fa-solid fa-star"></i><span class="text-red-600">*</span></div>
-                            <input type="radio" name="post[star_rating]" value="1" id="star_rating1" {{ $post->star_rating === '1' ? 'checked' : '' }}>
-                            <label for="option1"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">1</span></label>
-                            <input type="radio" name="post[star_rating]" value="2" id="star_rating2" {{ $post->star_rating === '2' ? 'checked' : '' }}>
-                            <label for="option2"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">2</span></label>
-                            <input type="radio" name="post[star_rating]" value="3" id="star_rating3" {{ $post->star_rating === '3' ? 'checked' : '' }}>
-                            <label for="option3"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">3</span></label>
-                            <input type="radio" name="post[star_rating]" value="4" id="star_rating4" {{ $post->star_rating === '4' ? 'checked' : '' }}>
-                            <label for="option4"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">4</span></label>
-                            <input type="radio" name="post[star_rating]" value="5" id="star_rating5" {{ $post->star_rating === '5' ? 'checked' : '' }}>
-                            <label for="option5"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">5</span></label>
-                        </div>
-                    </div>
-                    <div class="text-red-400">「<span class="text-red-600">*</span>」がついているものは必ず記入or選択してください！</div>
-                    <input type="hidden" name="post[user_id]" value="{{ $user->id }}">
-                    
-                    <input class="mt-3 px-4 py-2 bg-blue-300 hover:bg-blue-700 rounded w-full transition duration-500 ease-in-out" type="submit" value="保存"/>
-                </form>
-            </div>
+<div class="bg-white py-6 sm:py-8 lg:py-12">
+    <div class="mx-auto max-w-screen-2xl px-4 md:px-8">
+    <!-- text - start -->
+        <div class="mb-10 md:mb-16">
+            <h2 class="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">記事を投稿する</h2>
+
+            <p class="mx-auto max-w-screen-md text-center text-gray-500 md:text-lg">記事を投稿して自分のパソコンを紹介しましょう！</p>
         </div>
+    <!-- text - end -->
+    <!-- form - start -->
+        <form action="/posts/{{ $post->id }}" method="POST" enctype="multipart/form-data" class="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
+            @csrf
+            @method('put')
+            <!-- pc-name -->
+            <div class="sm:col-span-2">
+                <label for="title" class="mb-2 inline-block text-sm text-gray-800 sm:text-base"><span class="text-red-600">*</span>PC名</label>
+                <input value="{{ $post->title }}" required name="post[title]" id=title class="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring" />
+            </div>
+            <!-- image -->
+            <label class="sm:col-span-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="imageInput"><span class="text-red-600">*</span>パソコンの写真ををアップロードしてください</label>
+            <div>
+                @if ($post->image_path)
+                    <div class="text-2xl">編集前の画像</div>
+                    <img src="{{ $post->image_path }}" alt="記事の画像">
+                    <div class="text-red-400">※新しい画像を入れる場合、編集前の画像は削除されます</div>
+                @endif
+                <input class="sm:col-span-2 block w-full mb-2 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="imageInput" type="file" name="image" accept="image/png, image/jpeg, image/jpg">
+                <p class="sm:col-span-2 mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNGかJPGかJPEGをアップロードしてください。</p>
+                <img id="imagePreview" alt="プレビュー画像" style="display:none; max-width: 300px; max-height: 300px;" class="sm:col-span-2">
+            </div>
+            <!-- os -->
+            <h3 class="sm:col-span-2 mb-4 text-sm text-gray-800 sm:text-base"><span class="text-red-600">*</span>os</h3>
+            <ul class="sm:col-span-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->os === 'MAC' ? 'checked' : '' }} required id="windows" type="radio" value="Windows" name="post[os]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="windows" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Windows</label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->os === 'Windows' ? 'checked' : '' }} id="mac" type="radio" value="MAC" name="post[os]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="mac" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">MAC</label>
+                    </div>
+                </li>
+            </ul>
+            <!-- cost -->
+            <h3 class="sm:col-span-2 mb-4 text-sm text-gray-800 sm:text-base"><span class="text-red-600">*</span>価格帯</h3>
+            <ul class="sm:col-span-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->cost === '10万円以下' ? 'checked' : '' }} required id="cost1" type="radio" value="10万円以下" name="post[cost]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="cost1" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">10万円以下</label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->cost === '10万円～15万円' ? 'checked' : '' }} id="cost2" type="radio" value="10万円～15万円" name="post[cost]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="cost2" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">10万円～15万円</label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->cost === '15万円～20万円' ? 'checked' : '' }} id="cost3" type="radio" value="15万円～20万円" name="post[cost]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="cost3" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">15万円～20万円</label>
+                    </div>
+                </li>
+                <li class="w-full dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->cost === '20万円以上' ? 'checked' : '' }} id="cost4" type="radio" value="20万円以上" name="post[cost]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="cost4" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">20万円以上</label>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="sm:col-span-2">
+                <label for="body" class="mb-2 inline-block text-sm text-gray-800 sm:text-base"><span class="text-red-600">*</span>おすすめポイントや使用感など（300字以内）</label>
+                <textarea required id="body" name="post[body]" class="h-64 w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring">{{ $post->body }}</textarea>
+            </div>
+            
+            <h3 class="sm:col-span-2 mb-4 text-sm text-gray-800 sm:text-base"><span class="text-red-600">*</span>レビュー</h3>
+            <ul class="sm:col-span-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->star_rating === '1' ? 'checked' : '' }} required id="star_rating1" type="radio" value="1" name="post[star_rating]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="star_rating1" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">1</span></label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->star_rating === '2' ? 'checked' : '' }} id="star_rating2" type="radio" value="2" name="post[star_rating]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="star_rating2" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">2</span></label>
+                    </div>
+                </li>
+                <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->star_rating === '3' ? 'checked' : '' }} id="star_rating3" type="radio" value="3" name="post[star_rating]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="star_rating3" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">3</span></label>
+                    </div>
+                </li>
+                <li class="w-full dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->star_rating === '4' ? 'checked' : '' }} id="star_rating4" type="radio" value="4" name="post[star_rating]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="star_rating4" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">4</span></label>
+                    </div>
+                </li>
+                <li class="w-full dark:border-gray-600">
+                    <div class="flex items-center ps-3">
+                        <input {{ $post->star_rating === '5' ? 'checked' : '' }} id="star_rating5" type="radio" value="5" name="post[star_rating]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="star_rating5" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"><i class="text-yellow-400 fa-solid fa-star"></i><span class ="mr-2">5</span></label>
+                    </div>
+                </li>
+            </ul>
+      
+
+            <div class="flex items-center justify-between sm:col-span-2">
+                <input class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base" type="submit" value="投稿"/>
+                <span class="text-sm text-gray-500"><span class="text-red-600">*</span>必須</span>
+            </div>
+            
+            <input type="hidden" name="post[user_id]" value="{{ $user->id }}">
+
+        </form>
     </div>
-    <div class="footer">
-        <a class="ml-2 px-4 py-2 bg-gray-300 hover:bg-gray-500 rounded transition duration-500 ease-in-out" href="/">戻る</a>
-    </div>
-    <script>
+</div>
+<script>
         document.getElementById('imageInput').addEventListener('change', function () {
             const fileInput = this;
             const imgPreview = document.getElementById('imagePreview');
@@ -115,5 +143,5 @@
                 imgPreview.style.display = 'none';
             }
         });
-    </script>
+</script>
 </x-app-layout>

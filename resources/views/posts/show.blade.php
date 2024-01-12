@@ -15,9 +15,7 @@
                     @auth
                         @if (Auth::user()->id == $post->user->id)
                             <div class="grid grid-cols-2">
-                                <button class="my-8 py-1.5 px-4 transition-colors bg-gray-50 border active:bg-green-800 font-medium border-gray-200 hover:text-white text-green-600 hover:border-green-700 rounded-lg hover:bg-green-600 disabled:opacity-50">
-                                    <a href="/posts/{{ $post->id }}/edit">編集</a>
-                                </button>
+                                <a href="/posts/{{ $post->id }}/edit" class="text-center"><button class="my-8 py-1.5 px-4 transition-colors bg-gray-50 border active:bg-green-800 font-medium border-gray-200 hover:text-white text-green-600 hover:border-green-700 rounded-lg hover:bg-green-600 disabled:opacity-50">編集</button></a>
                                 <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post" class="text-center">
                                     @csrf
                                     @method('delete')
